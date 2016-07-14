@@ -26,20 +26,19 @@
                 <li class="list-group-item">
                     <pre>Book was assigned to: {{ (isset($bookOwner)) ? $bookOwner->lastname : 'No one'}}</pre>
                 </li>
-                <li class="list-group-item">
-                    Select the user for assignment :
-                    {{ Form::model($book, ['route' => ['books.assign', $book->id]]) }}
-
-                    {{ Form::select('userId',$usersAndIds)}}
-                    {{ Form::submit('Assign the book',['class' => 'btn btn-primary']) }}
-                    {{ Form::close() }}
-                </li>
-                <li class="list-group-item">
-                    <a class="btn btn-small btn-success" href="{{ route('books.refund',['book'=>$book->id]) }}">Refund the book</a>
-                </li>
-
             </ul>
-
+                <div>
+                    @if(!isset($bookOwner))
+                        <div class="lead">
+                            Select the user for assignment :
+                        </div>
+                        {{ Form::model($book, ['route' => ['books.assign', $book->id]]) }}
+                            {{ Form::select('userId',$usersAndIds)}}
+                            {{ Form::submit('Assign the book',['class' => 'btn btn-primary']) }}
+                        {{ Form::close() }}
+                    @endif
+                    <a class="btn btn-small btn-success" href="{{ route('books.refund',['book'=>$book->id]) }}">Refund the book</a>
+                </div>
         </div>
     </div>
 @endsection

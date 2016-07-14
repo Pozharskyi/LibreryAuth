@@ -20,15 +20,18 @@
                 <li class="list-group-item">
                     <pre>Email:  {{ $user->email }}</pre>
                 </li>
-                <span>Assigned books:</span>
-                @foreach($assignedBooks as $book)
-                    <li class="list-group-item">
-                        #{{ $book->id }} {{$book->title}}
-                    </li>
-
-                @endforeach
             </ul>
-
+            <div class="lead">Assigned books:</div>
+            <ul class="list-group">
+            @foreach($assignedBooks as $book)
+                <li class="list-group-item">
+                    <div class="pagination">
+                        #{{ $book->id }} {{$book->title}}
+                        <a class="btn btn-small btn-success pull-right" href="{{ route('books.refund',['book'=>$book->id]) }}">Refund the book</a>
+                    </div>
+                </li>
+            @endforeach
+            </ul>
         </div>
     </div>
 @endsection
