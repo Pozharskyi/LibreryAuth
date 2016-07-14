@@ -12,33 +12,52 @@
             <h1>Book #{{ $book->id }}</h1>
             <ul class="list-group">
                 <li class="list-group-item">
-                    <pre>Title:  {{ $book->title  }}</pre>
+                    <div class="panel">
+                        Title: {{ $book->title  }}
+                    </div>
+
                 </li>
                 <li class="list-group-item">
-                    <pre>Author:  {{ $book->author }}</pre>
+                    <div class="panel">
+                        Author: {{ $book->author }}
+                    </div>
                 </li>
                 <li class="list-group-item">
-                    <pre>Year:  {{ $book->year }}</pre>
+                    <div class="panel">
+                        Year: {{ $book->year }}
+                    </div>
                 </li>
                 <li class="list-group-item">
-                    <pre>Genre:  {{ $book->genre }}</pre>
+                    <div class="panel">
+                        Genre: {{ $book->genre }}
+                    </div>
                 </li>
                 <li class="list-group-item">
-                    <pre>Book was assigned to: {{ (isset($bookOwner)) ? $bookOwner->lastname : 'No one'}}</pre>
+                    <div class="panel">
+                        Book was assigned to:
+                        @if(isset($bookOwner))
+                            <a href="{{ $bookOwner->path() }}">{{ $bookOwner->lastname }}</a>
+                        @else
+                            No one
+                        @endif
+                    </div>
+
                 </li>
             </ul>
-                <div>
-                    @if(!isset($bookOwner))
-                        <div class="lead">
-                            Select the user for assignment :
-                        </div>
-                        {{ Form::model($book, ['route' => ['books.assign', $book->id]]) }}
-                            {{ Form::select('userId',$usersAndIds)}}
-                            {{ Form::submit('Assign the book',['class' => 'btn btn-primary']) }}
-                        {{ Form::close() }}
-                    @endif
-                    <a class="btn btn-small btn-success" href="{{ route('books.refund',['book'=>$book->id]) }}">Refund the book</a>
-                </div>
+            <div class="panel-primary">
+                @if(!isset($bookOwner))
+                    <div class="lead">
+                        Select the user for assignment :
+                    </div>
+                    {{ Form::model($book, ['route' => ['books.assign', $book->id]]) }}
+                    {{ Form::select('userId',$usersAndIds)}}
+                    {{ Form::submit('Assign the book',['class' => 'btn btn-primary']) }}
+                    {{ Form::close() }}
+                @else
+                    <a class="btn btn-small btn-success" href="{{ route('books.refund',['book'=>$book->id]) }}">Refund
+                        the book</a>
+                @endif
+            </div>
         </div>
     </div>
 @endsection

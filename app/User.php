@@ -15,8 +15,14 @@ class User extends Model
     protected $hidden = [
         'remember_token'
     ];
-    public function books(){
+
+    public function books()
+    {
         return $this->hasMany(Book::class);
     }
 
+    public function path()
+    {
+        return route('users.show', ['user' => $this->id]);
+    }
 }

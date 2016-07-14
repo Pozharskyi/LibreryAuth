@@ -10,11 +10,16 @@ class Book extends Model
 
     public $timestamps = false;
 
-    public $fillable = ['title','author','year','genre'];
+    public $fillable = ['title', 'author', 'year', 'genre'];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
+    public function path()
+    {
+        return route('books.show',['book'=>$this->id]);
+    }
 
 }
