@@ -36,6 +36,7 @@
                 </td>
             </tr>
         @endforeach
+        {{ $users->render() }}
         </tbody>
     </table>
 

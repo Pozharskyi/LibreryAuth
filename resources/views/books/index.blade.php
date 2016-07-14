@@ -38,6 +38,7 @@
                 </td>
             </tr>
         @endforeach
+        {{ $books->render() }}
         </tbody>
     </table>
 
