@@ -79,7 +79,7 @@ class BookController extends Controller
             $usersIds [] = $user->id;
             $usersNames [] = $user->lastname;
         }
-        $usersAndIds = array_combine($usersIds, $usersNames);
+        $usersAndIds = array_combine($usersIds, $usersNames);   //associative array id=>lastname using in select form
 
         return view('books.show')->with(compact('book','usersAndIds','bookOwner'));
     }

@@ -30,7 +30,7 @@
 
                         {{ Form::open(['url' => 'users/' . $user->id, 'class' => 'pull-right']) }}
                         {{ Form::hidden('_method', 'DELETE') }}
-                        {{ Form::submit('Delete user', ['class' => 'btn btn-warning']) }}
+                        {{ Form::submit('Delete User', ['class' => 'btn btn-warning']) }}
                         {{ Form::close() }}
                     </div>
                 </td>

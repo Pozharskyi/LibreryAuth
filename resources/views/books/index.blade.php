@@ -32,7 +32,7 @@
 
                         {{ Form::open(['url' => 'books/' . $book->id, 'class' => 'pull-right']) }}
                         {{ Form::hidden('_method', 'DELETE') }}
-                        {{ Form::submit('Delete book', ['class' => 'btn btn-warning']) }}
+                        {{ Form::submit('Delete the book', ['class' => 'btn btn-warning']) }}
                         {{ Form::close() }}
                     </div>
                 </td>

@@ -31,9 +31,9 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10)
     ];
 });
-$factory->define(App\Book::class, function (Faker\Generator $faker) use ($genre) {           //TODO add random user_id
+$factory->define(App\Book::class, function (Faker\Generator $faker) use ($genre) {
     return [
-        'title' => $faker->sentence(2),
+        'title' => $faker->word,
         'author' => $faker->name,
         'year' => $faker->year,
         'genre' => $genre[rand(0, count($genre) - 1)]
