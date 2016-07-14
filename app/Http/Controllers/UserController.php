@@ -44,7 +44,7 @@ class UserController extends Controller
     public function show(User $user)
     {
         $assignedBooks = $user->books;
-        return view('users.show')->with('user',$user)->with('assignedBooks',$assignedBooks);
+        return view('users.show')->with(compact('user','assignedBooks'));
     }
 
     public function edit(User $user)

@@ -81,7 +81,7 @@ class BookController extends Controller
         }
         $usersAndIds = array_combine($usersIds, $usersNames);
 
-        return view('books.show')->with('book', $book)->with('usersAndIds', $usersAndIds)->with('bookOwner', $bookOwner);
+        return view('books.show')->with(compact('book','usersAndIds','bookOwner'));
     }
 
     /**

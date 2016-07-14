@@ -54,6 +54,9 @@
                     {{ Form::submit('Assign the book',['class' => 'btn btn-primary']) }}
                     {{ Form::close() }}
                 @else
+                    <div class="lead">
+                        Refund the book before assigning it to another user:
+                    </div>
                     <a class="btn btn-small btn-success" href="{{ route('books.refund',['book'=>$book->id]) }}">Refund
                         the book</a>
                 @endif
