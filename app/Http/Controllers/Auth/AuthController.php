@@ -29,7 +29,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new authentication controller instance.
@@ -41,11 +41,7 @@ class AuthController extends Controller
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
-    protected function authenticated($request, $user)           //TODO redirect admin to another url
-    {
 
-        return redirect()->intended(route('users.show',['user'=>$user->id]));
-    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -77,5 +73,9 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+    protected function authenticated($user)           //TODO redirect admin to another url
+    {
 
+        return redirect()->route('users.show',['user'=>$user->id]);
+    }
 }
