@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use Auth;
+use Socialite;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -45,7 +46,7 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -61,20 +62,55 @@ class AuthController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
     {
         return User::create([
             'firstname' => $data['firstname'],
-            'lastname' =>$data['lastname'],
+            'lastname' => $data['lastname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
     }
+
     protected function authenticated()           //TODO redirect admin to another url
     {
-        return redirect()->route('users.show',['user'=>Auth::id()]);
+        return redirect($this->redirectPath());
+    }
+
+    /**
+     * Redirect the user to the Facebook authentication page.
+     *
+     * @return Response
+     */
+    public function redirectToProvider()
+    {
+        return Socialite::driver('facebook')->redirect();
+    }
+
+    /**
+     * Obtain the user information from Facebook.
+     *
+     * @return Response
+     */
+    public function handleProviderCallback()
+    {
+        $socialUser = Socialite::driver('facebook')->user();
+
+        $user = User::where(['email' => $socialUser->email])->first();
+        if (is_null($user)) {
+            list($firstname, $lastname) = explode(' ',$socialUser->name);
+            $user = User::create(['email' => $socialUser->email, 'firstname' => $firstname, 'lastname' => $lastname]);
+        }
+
+        Auth::login($user);
+        return $this->redirect($this->redirectPath());
+
+    }
+    public function redirectPath()
+    {
+        return route('users.show',['user' => Auth::id()]);
     }
 }
