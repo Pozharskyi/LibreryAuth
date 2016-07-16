@@ -66,7 +66,7 @@ class UserController extends Controller
         $rules = [
             'firstname' => 'required|alpha',
             'lastname' => 'required|alpha',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email,'.$user->id,
             'password' =>'required|min:6'
         ];
         $validator = Validator::make($request->all(), $rules);
@@ -75,7 +75,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         } else {
 
-            $user->update($request->all());
+            $user->update([$request->except('password'),'password'=>bcrypt($request->password)]);
             Session::flash('message', 'User has been updated');
             return redirect()->route('users.index');
         }

@@ -11,10 +11,6 @@
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-Route::group(['middleware' => 'web'], function () {
     //books routes
     Route::resource('books', 'BookController');
     Route::post('books/{book}/assign', 'BookController@assignToUser')->name('books.assign');
@@ -37,4 +33,3 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', function () {
     return view('welcome');
     });
-});
