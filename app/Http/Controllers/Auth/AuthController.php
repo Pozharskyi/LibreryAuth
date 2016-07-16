@@ -73,9 +73,8 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-    protected function authenticated($user)           //TODO redirect admin to another url
+    protected function authenticated()           //TODO redirect admin to another url
     {
-
-        return redirect()->route('users.show',['user'=>$user->id]);
+        return redirect()->route('users.show',['user'=>Auth::id()]);
     }
 }
