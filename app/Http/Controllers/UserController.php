@@ -10,6 +10,15 @@ use Session;
 
 class UserController extends Controller
 {
+
+    /**
+     * UserController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $users = User::paginate(10);

@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.admin')
 @section('content')
 
 
@@ -32,7 +32,7 @@
 
             <ul class="list-group">
                 @foreach($assignedBooks as $book)
-                    <li class="list-group-item ">
+                    <li class="list-group-item panel">
                         <div class="">
                             <a href="{{ $book->path() }}"> #{{ $book->id }} {{$book->title}}</a>
                             <a class="btn btn-small btn-success pull-right"

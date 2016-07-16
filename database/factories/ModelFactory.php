@@ -28,7 +28,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'firstname' => $faker->firstName,
         'email' => $faker->safeEmail,
         'lastname' =>$faker->lastName,
-        'remember_token' => str_random(10)
+        'remember_token' => str_random(10),
+        'password' =>'123456'
     ];
 });
 $factory->define(App\Book::class, function (Faker\Generator $faker) use ($genre) {

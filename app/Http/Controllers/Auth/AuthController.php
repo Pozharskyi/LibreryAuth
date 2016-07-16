@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Auth;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -40,6 +41,11 @@ class AuthController extends Controller
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
+    protected function authenticated($request, $user)           //TODO redirect admin to another url
+    {
+
+        return redirect()->intended(route('users.show',['user'=>$user->id]));
+    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -49,8 +55,9 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'firstname' => 'required|alpha|max:255',
+            'lastname' => 'required|alpha|max:255',
+            'email' => 'required|email|unique:users|max:255',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -64,9 +71,11 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'firstname' => $data['firstname'],
+            'lastname' =>$data['lastname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
     }
+
 }
