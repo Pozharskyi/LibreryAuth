@@ -1,4 +1,6 @@
 # BSA homework CRUD система учета книг в библиотеке
+admin: admin@gmail.com password:654321
+all users: password:123456
 в основном меню:
 Books - список всех книг
 Users - список всех пользователей
