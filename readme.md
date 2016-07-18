@@ -8,7 +8,7 @@ Create user - создать нового пользователя(firstname, la
 Create book - создать новую книгу(title, author, year, genre)
 ## Show user
 
- - информация о пользователе и список его книг. Здесь же кнопка Refund book для возврата книги.
+ - информация о пользователе и список его книг.
 
 ## Show book
 
