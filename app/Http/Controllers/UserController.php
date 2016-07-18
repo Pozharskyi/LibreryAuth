@@ -28,6 +28,9 @@ class UserController extends Controller
 
     public function create()
     {
+        if (Gate::denies('create', new User())) {
+            abort(403, 'Access denied');
+        }
         return view('users.create');
     }
 
@@ -66,6 +69,9 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        if (Gate::denies('update',$user)) {
+            abort(403, 'Access denied');
+        }
         return view('users.edit')->with('user',$user);
     }
     public function update(Request $request, User $user){

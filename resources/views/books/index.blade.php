@@ -1,6 +1,6 @@
 
 @extends('layouts.authUser')
-@section('create_user_link')
+@section('create_book_link')
     @can('createBook', $books->first())
     <ul class="nav navbar-nav">
         <li><a href="{{ route('books.create') }}">Create book</a> </li>
