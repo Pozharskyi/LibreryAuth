@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.authUser')
 @section('content')
 
 
@@ -44,23 +44,25 @@
 
                 </li>
             </ul>
-            <div class="panel-primary">
-                @if(!isset($bookOwner))
-                    <div class="lead">
-                        Select the user for assignment :
-                    </div>
-                    {{ Form::model($book, ['route' => ['books.assign', $book->id]]) }}
-                    {{ Form::select('userId',$usersAndIds)}}
-                    {{ Form::submit('Assign the book',['class' => 'btn btn-primary']) }}
-                    {{ Form::close() }}
-                @else
-                    <div class="lead">
-                        Refund the book before assigning it to another user:
-                    </div>
-                    <a class="btn btn-small btn-success" href="{{ route('books.refund',['book'=>$book->id]) }}">Refund
-                        the book</a>
-                @endif
-            </div>
+            @can('update', $book)
+                <div class="panel-primary">
+                    @if(!isset($bookOwner))
+                        <div class="lead">
+                            Select the user for assignment :
+                        </div>
+                        {{ Form::model($book, ['route' => ['books.assign', $book->id]]) }}
+                        {{ Form::select('userId',$usersAndIds)}}
+                        {{ Form::submit('Assign the book',['class' => 'btn btn-primary']) }}
+                        {{ Form::close() }}
+                    @else
+                        <div class="lead">
+                            Refund the book before assigning it to another user:
+                        </div>
+                        <a class="btn btn-small btn-success" href="{{ route('books.refund',['book'=>$book->id]) }}">Refund
+                            the book</a>
+                    @endif
+                </div>
+            @endcan
         </div>
     </div>
 @endsection

@@ -40,7 +40,10 @@ class BookController extends Controller
      */
     public function create()
     {
-
+//        $this->authorize('update');
+        if (Gate::denies('update')) {
+            abort(403,'Access denied');
+        }
         return view('books.create');
     }
 
@@ -104,6 +107,9 @@ class BookController extends Controller
      */
     public function edit($id)
     {
+        if (Gate::denies('update')) {
+            abort(403,'Access denied');
+        }
         $book = Book::find($id);
         return view('books/edit')->with('book', $book);
     }
@@ -159,7 +165,9 @@ class BookController extends Controller
 
     public function assignToUser(Request $request, Book $book)
     {
-
+        if (Gate::denies('update',$book)) {
+            abort(403,'Access denied');
+        }
         $user = User::findOrFail($request->userId);
         $book->user()->associate($user);
         $book->save();
@@ -169,6 +177,9 @@ class BookController extends Controller
     }
     public function refund (Book $book)
     {
+        if (Gate::denies('update',$book)) {
+            abort(403,'Access denied');
+        }
         $book->user()->dissociate();
         $book->save();
         Session::flash('message', 'Book has been refunded');

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.authUser')
 @section('content')
     <h1>All books</h1>
 
@@ -27,13 +27,16 @@
                 <td>{{ $book->genre}}</td>
                 <td>
                     <div class="btn-group inline">
-                        <a class="btn btn-small btn-success" href="{{ route('books.show',['book'=>$book->id]) }}">Show the book</a>
-                        <a class="btn btn-small btn-info" href="{{ route('books.edit', ['book' => $book->id]) }}">Edit the book</a>
 
-                        {{ Form::open(['url' => 'books/' . $book->id, 'class' => 'pull-right']) }}
-                        {{ Form::hidden('_method', 'DELETE') }}
-                        {{ Form::submit('Delete the book', ['class' => 'btn btn-warning']) }}
-                        {{ Form::close() }}
+                        <a class="btn btn-small btn-success" href="{{ route('books.show',['book'=>$book->id]) }}">Show the book</a>
+                        @can('update', $book)
+                             <a class="btn btn-small btn-info" href="{{ route('books.edit', ['book' => $book->id]) }}">Edit the book</a>
+
+                            {{ Form::open(['url' => 'books/' . $book->id, 'class' => 'pull-right']) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Delete the book', ['class' => 'btn btn-warning']) }}
+                            {{ Form::close() }}
+                        @endcan
                     </div>
                 </td>
             </tr>
