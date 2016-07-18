@@ -40,7 +40,7 @@
             </div>
             <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                 {{ Form::label('password','Password') }}
-                {{ Form::text('password', old('password'), ['class' => 'form-control']) }}
+                {{ Form::text('password', '', ['class' => 'form-control']) }}
                 @if ($errors->has('password'))
                     <span class="help-block">
                         <strong>{{ $errors->first('password') }}</strong>
