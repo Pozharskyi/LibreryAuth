@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Gate;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
@@ -32,6 +33,7 @@ class UserController extends Controller
 
     public function save(Request $request)
     {
+
         $rules = [
             'firstname' => 'required|alpha',
             'lastname' => 'required|alpha',
@@ -45,6 +47,11 @@ class UserController extends Controller
         } else {
 
             $user = new User();
+
+            if (Gate::denies('create',$user)) {
+                abort(403, 'Access denied');
+            }
+
             $user->create($request->all());
             Session::flash('message', 'User has been created');
             return redirect()->route('users.index');
@@ -63,6 +70,9 @@ class UserController extends Controller
     }
     public function update(Request $request, User $user){
 
+        if (Gate::denies('update',$user)) {
+            abort(403, 'Access denied');
+        }
         $rules = [
             'firstname' => 'required|alpha',
             'lastname' => 'required|alpha',
@@ -82,6 +92,9 @@ class UserController extends Controller
     }
     public function delete(User $user)
     {
+        if (Gate::denies('delete',$user)) {
+            abort(403, 'Access denied');
+        }
         Session::flash('message','User has been deleted successful');
         $user->delete();
         return redirect()->route('users.index');

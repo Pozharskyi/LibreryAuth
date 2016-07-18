@@ -18,15 +18,24 @@ class UserPolicy
     {
         //
     }
-//    public function update(User $user)
-//    {
-//        return \Auth::id() === $user->id;
-//    }
+    public function update(User $user,User $selectedUser)
+    {
+        return $user->id === $selectedUser->id;
+    }
+    public function delete(User $user,User $selectedUser)
+    {
+        return false;
+    }
+    public function create(User $user,User $selectedUser)
+    {
+        return false;
+    }
 
-//    public function before(User $user)
-//    {
-//        if ($user->isSuperAdmin()) {
-//            return true;
-//        }
-//    }
+    public function before(User $user)
+    {
+        if ($user->isAdmin()) {
+            return true;
+        }
+        return false;
+    }
 }
