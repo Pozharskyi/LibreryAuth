@@ -44,7 +44,7 @@
 
                 </li>
             </ul>
-            @can('update', $book)
+            @can('assignBook', $book)
                 <div class="panel-primary">
                     @if(!isset($bookOwner))
                         <div class="lead">
@@ -58,8 +58,10 @@
                         <div class="lead">
                             Refund the book before assigning it to another user:
                         </div>
-                        <a class="btn btn-small btn-success" href="{{ route('books.refund',['book'=>$book->id]) }}">Refund
-                            the book</a>
+                        @can('refundBook', $book)
+                             <a class="btn btn-small btn-success" href="{{ route('books.refund',['book'=>$book->id]) }}">Refund
+                                the book</a>
+                        @endcan
                     @endif
                 </div>
             @endcan
