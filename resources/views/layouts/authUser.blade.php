@@ -6,11 +6,7 @@
     <ul class="nav navbar-nav">
         <li><a href="{{ route('users.index') }}">Users</a></li>
     </ul>
-    @can('update')
-    <ul class="nav navbar-nav">
-        <li><a href="{{ route('books.create') }}">Create book</a> </li>
-    </ul>
-    @endcan
+    @yield('create_user_link')
     <ul class="nav navbar-nav">
         <li><a href="{{ route('users.create') }}">Create user</a></li>
     </ul>

@@ -1,4 +1,12 @@
+
 @extends('layouts.authUser')
+@section('create_user_link')
+    @can('createBook', $books->first())
+    <ul class="nav navbar-nav">
+        <li><a href="{{ route('books.create') }}">Create book</a> </li>
+    </ul>
+    @endcan
+@endsection
 @section('content')
     <h1>All books</h1>
 
@@ -29,10 +37,10 @@
                     <div class="btn-group inline">
 
                         <a class="btn btn-small btn-success" href="{{ route('books.show',['book'=>$book->id]) }}">Show the book</a>
-                        @can('updateBook')
+                        @can('updateBook',$book)
                              <a class="btn btn-small btn-info" href="{{ route('books.edit', ['book' => $book->id]) }}">Edit the book</a>
                         @endcan
-                        @can('deleteBook')
+                        @can('deleteBook',$book)
                             {{ Form::open(['url' => 'books/' . $book->id, 'class' => 'pull-right']) }}
                             {{ Form::hidden('_method', 'DELETE') }}
                             {{ Form::submit('Delete the book', ['class' => 'btn btn-warning']) }}

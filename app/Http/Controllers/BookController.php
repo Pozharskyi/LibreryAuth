@@ -40,8 +40,9 @@ class BookController extends Controller
      */
     public function create()
     {
-//        $this->authorize('update');
-        if (Gate::denies('createBook')) {
+
+        $book = new Book();
+        if (Gate::denies('createBook',$book)) {
             abort(403, 'Access denied');
         }
         return view('books.create');
@@ -66,11 +67,11 @@ class BookController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         } else {
-
-            if (Gate::denies('createBook')) {
+            $book = new Book();
+            if (Gate::denies('createBook',$book)) {
                 abort(403, 'Access denied');
             }
-            $book = new Book();
+
 
             $book->create($request->all());
             Session::flash('message', 'Book has been created');
@@ -108,10 +109,11 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        if (Gate::denies('updateBook')) {
+        $book = Book::find($id);
+        if (Gate::denies('updateBook',$book)) {
             abort(403, 'Access denied');
         }
-        $book = Book::find($id);
+
         return view('books/edit')->with('book', $book);
     }
 
@@ -136,7 +138,7 @@ class BookController extends Controller
             return redirect()->back()->withErrors($validator->errors())->withInput();
         } else {
             $book = Book::find($id);
-            if (Gate::denies('updateBook')) {
+            if (Gate::denies('updateBook',$book)) {
                 abort(403, 'Access denied');
             }
 
@@ -156,7 +158,7 @@ class BookController extends Controller
     public function destroy($id)
     {
         $book = Book::find($id);
-        if (Gate::denies('deleteBook')) {
+        if (Gate::denies('deleteBook',$book)) {
             abort(403, 'Access denied');
         }
         $book->delete();
@@ -166,7 +168,7 @@ class BookController extends Controller
 
     public function assignToUser(Request $request, Book $book)
     {
-        if (Gate::denies('assignBook')) {
+        if (Gate::denies('assignBook',$book)) {
             abort(403, 'Access denied');
         }
         $user = User::findOrFail($request->userId);
@@ -179,7 +181,7 @@ class BookController extends Controller
 
     public function refund(Book $book)
     {
-        if (Gate::denies('refundBook')) {
+        if (Gate::denies('refundBook',$book)) {
             abort(403, 'Access denied');
         }
         $book->user()->dissociate();
