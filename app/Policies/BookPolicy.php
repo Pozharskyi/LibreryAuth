@@ -20,8 +20,29 @@ class BookPolicy
         //
     }
 
-    public function update(User $user)
+    public function updateBook(User $user)
     {
         return $user->isAdmin();
     }
+
+    public function createBook(User $user)
+    {
+        return $user->isAdmin();
+    }
+
+    public function deleteBook(User $user)
+    {
+        return $user->isAdmin();
+    }
+
+    public function refundBook(User $user)
+    {
+        return $user->isAdmin();
+    }
+
+    public function assignBook(User $user)
+    {
+        return $user->isAdmin();
+    }
+
 }

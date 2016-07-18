@@ -29,9 +29,10 @@
                     <div class="btn-group inline">
 
                         <a class="btn btn-small btn-success" href="{{ route('books.show',['book'=>$book->id]) }}">Show the book</a>
-                        @can('update', $book)
+                        @can('updateBook')
                              <a class="btn btn-small btn-info" href="{{ route('books.edit', ['book' => $book->id]) }}">Edit the book</a>
-
+                        @endcan
+                        @can('deleteBook')
                             {{ Form::open(['url' => 'books/' . $book->id, 'class' => 'pull-right']) }}
                             {{ Form::hidden('_method', 'DELETE') }}
                             {{ Form::submit('Delete the book', ['class' => 'btn btn-warning']) }}
