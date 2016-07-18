@@ -18,17 +18,25 @@ class UserPolicy
     {
         //
     }
-    public function update(User $user,User $selectedUser)
+
+    public function update(User $user, User $selectedUser)
     {
         return $user->id === $selectedUser->id;
     }
-    public function delete(User $user,User $selectedUser)
+
+    public function delete(User $user, User $selectedUser)
     {
         return false;
     }
-    public function create(User $user,User $selectedUser)
+
+    public function create(User $user, User $selectedUser)
     {
         return false;
+    }
+
+    public function show(User $user, User $selectedUser)
+    {
+        return $user->id === $selectedUser->id;
     }
 
     public function before(User $user)

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Gate;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
@@ -22,7 +24,12 @@ class UserController extends Controller
 
     public function index()
     {
-        $users = User::paginate(10);
+        if(Auth::user()->isAdmin()){
+            $users = User::paginate(10);
+        } else {
+            $users = new Collection();
+            $users->add(Auth::user());
+        }
         return view('users.index')->with('users', $users);
     }
 
@@ -63,6 +70,9 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        if (Gate::denies('show',$user)) {
+            abort(403, 'Access denied');
+        }
         $assignedBooks = $user->books;
         return view('users.show')->with(compact('user','assignedBooks'));
     }

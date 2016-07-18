@@ -47,7 +47,9 @@
                 </td>
             </tr>
         @endforeach
-        {{ $users->render() }}
+        @if(($users->first()->isAdmin()) || (count($users) != 1))
+            {{ $users->render() }}
+        @endif
         </tbody>
     </table>
 
