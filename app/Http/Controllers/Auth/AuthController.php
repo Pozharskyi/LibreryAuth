@@ -106,11 +106,12 @@ class AuthController extends Controller
         }
 
         Auth::login($user);
-        return $this->redirect($this->redirectPath());
+        return redirect($this->redirectPath());
 
     }
     public function redirectPath()
     {
         return route('users.show',['user' => Auth::id()]);
     }
+
 }

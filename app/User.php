@@ -37,4 +37,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         return $this->belongsToMany(Role::class,'role_user','user_id','role_id');
     }
+    public function isAdmin()
+    {
+        if($this->roles()->where('name','Admin')->first()){
+            return true;
+        }
+        return false;
+
+    }
 }

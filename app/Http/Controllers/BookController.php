@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Gate;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -53,7 +54,7 @@ class BookController extends Controller
     {
         $rules = [
             'year' => 'required|integer',
-            'title' => 'required|regex:/^[(a-zA-Z\s)]+$/u',         //Regex for letters with spaces
+            'title' => 'required|regex:/^[(a-zA-Z\s)]+$/u',         //Regex for words with spaces
             'author' => 'required|regex:/^[(a-zA-Z\s)]+$/u',
             'genre' => 'required|alpha'
         ];
@@ -64,6 +65,9 @@ class BookController extends Controller
         } else {
 
             $book = new Book();
+            if (Gate::denies('update',$book)) {
+                abort(403,'Access denied');
+            }
             $book->create($request->all());
             Session::flash('message', 'Book has been created');
             return redirect()->route('books.index');
@@ -115,7 +119,7 @@ class BookController extends Controller
     {
         $rules = [
             'year' => 'required|integer',
-            'title' => 'required|regex:/^[(a-zA-Z\s)]+$/u',
+            'title' => 'required|regex:/^[(a-zA-Z\s)]+$/u',     //Regex for words with spaces
             'author' => 'required|regex:/^[(a-zA-Z\s)]+$/u',
             'genre' => 'required|alpha'
         ];
@@ -124,8 +128,11 @@ class BookController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         } else {
-
             $book = Book::find($id);
+            if (Gate::denies('update',$book)) {
+                abort(403,'Access denied');
+            }
+
             $book->update($request->all());
 
             Session::flash('message', 'Book has been updated');
@@ -141,7 +148,11 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        Book::destroy($id);
+        $book = Book::find($id);
+        if (Gate::denies('update',$book)) {
+            abort(403,'Access denied');
+        }
+        $book->delete();
         Session::flash('message', 'Book has been deleted');
         return redirect()->route('books.index');
     }
